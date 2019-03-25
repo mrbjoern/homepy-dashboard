@@ -1,28 +1,36 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { connect } from "react-redux";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+import { Dashboard } from "./components";
 
-export default App;
+// import "./App.css";
+
+const App = (props: {
+  lights: [];
+  rooms: [];
+  getLights: () => void;
+  getRooms: () => void;
+}) => (
+  <div className="App">
+    <Dashboard />
+  </div>
+);
+
+export default connect(
+  (state: { hueReducer: any }) => ({
+    lights: state.hueReducer.lights,
+    rooms: state.hueReducer.rooms
+  }),
+  dispatch => ({
+    getLights: () => {
+      dispatch({
+        type: "GET_LIGHTS"
+      });
+    },
+    getRooms: () => {
+      dispatch({
+        type: "GET_ROOMS"
+      });
+    }
+  })
+)(App);
