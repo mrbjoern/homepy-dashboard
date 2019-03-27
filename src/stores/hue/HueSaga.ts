@@ -20,4 +20,18 @@ export default class HueSaga {
       yield put({ type: "GET_ROOMS_FAILED", data: error.message });
     }
   }
+
+  public static *switchRoom(action: any) {
+    console.log(action.data);
+    try {
+      const response: any = yield call(
+        HueService.switchRoom,
+        action.data.roomId,
+        action.data.action
+      );
+      yield put({ type: "SWITCH_ROOM_SUCCESS", data: action.data.roomId });
+    } catch (error) {
+      yield put({ type: "SWITCH_ROOM_FAILED", data: error.message });
+    }
+  }
 }

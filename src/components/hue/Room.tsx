@@ -15,20 +15,23 @@ const styles = (theme: any) => ({
   }
 });
 
-const Room = (props: { room: any; classes: any; key: any }) => (
+const Room = (props: {
+  room: any;
+  id: string;
+  classes: any;
+  switchRoom: (roomId: string, action: any) => void;
+}) => (
   <div className={props.classes.root}>
     <Grid container spacing={24}>
       <Grid item xs={12}>
+        <h2>{props.room.name}</h2>
         <Paper className={props.classes.paper}>
-          <h2>
-            {props.room.name}
-            <Switch
-              checked={!props.room.state.all_on}
-              onChange={() => console.log("toggle!")}
-              value="State"
-              color="primary"
-            />
-          </h2>
+          <Switch
+            checked={props.room.action.on}
+            onChange={() => props.switchRoom(props.id, props.room.action)}
+            value="State"
+            color="primary"
+          />
         </Paper>
       </Grid>
     </Grid>

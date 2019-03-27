@@ -11,16 +11,40 @@ function handleResponseErrors(response: Response) {
 
 export default class HueService {
   public static async getLights(): Promise<any> {
-    return fetch(API_URL + "/lights", {
-      method: "GET"
+    return HueService.get("/lights");
+  }
+
+  public static async getRooms(): Promise<any> {
+    return HueService.get("/rooms");
+  }
+
+  public static async switchRoom(id: number, action: any): Promise<any> {
+    const switchAction = {
+      on: !action.on
+    };
+    const endpoint = `/rooms/${id}`;
+    return HueService.put(endpoint, switchAction);
+  }
+
+  public static async put(endpoint: string, action: any): Promise<any> {
+    return fetch(API_URL + endpoint, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(action)
     })
       .then(handleResponseErrors)
       .then(response => response.json());
   }
 
-  public static async getRooms(): Promise<any> {
-    return fetch(API_URL + "/rooms", {
-      method: "GET"
+  public static async get(endpoint: string): Promise<any> {
+    return fetch(API_URL + endpoint, {
+      method: "GET",
+      headers: {
+        Accept: "application/json"
+      }
     })
       .then(handleResponseErrors)
       .then(response => response.json());

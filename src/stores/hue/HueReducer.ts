@@ -1,7 +1,13 @@
 export default class HueReducer {
   private static readonly _initialState: any = {
-    lights: [],
-    rooms: []
+    lights: {
+      byId: {},
+      allIds: []
+    },
+    rooms: {
+      byId: {},
+      allIds: []
+    }
   };
 
   public static reducer(
@@ -10,9 +16,41 @@ export default class HueReducer {
   ): any {
     switch (action.type) {
       case "GET_LIGHTS_SUCCESS":
-        return { ...state, lights: HueReducer.convertToArray(action.data) };
+        return {
+          ...state,
+          lights: {
+            ...state.lights,
+            byId: action.data,
+            allIds: Object.keys(action.data)
+          }
+        };
       case "GET_ROOMS_SUCCESS":
-        return { ...state, rooms: HueReducer.convertToArray(action.data) };
+        return {
+          ...state,
+          rooms: {
+            ...state.rooms,
+            byId: action.data,
+            allIds: Object.keys(action.data)
+          }
+        };
+      case "SWITCH_ROOM_SUCCESS":
+        const actionState = state.rooms.byId[action.data].action;
+        return {
+          ...state,
+          rooms: {
+            ...state.rooms,
+            byId: {
+              ...state.rooms.byId,
+              [action.data]: {
+                ...state.rooms.byId[action.data],
+                action: {
+                  ...state.rooms.byId[action.data].action,
+                  on: !actionState.on
+                }
+              }
+            }
+          }
+        };
       default:
         return { ...state };
     }

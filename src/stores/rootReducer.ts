@@ -1,12 +1,12 @@
 import IStore from "./IStore";
-import { combineReducers, Reducer, ReducersMapObject } from "redux";
+import { combineReducers, Reducer } from "redux";
+import { connectRouter } from "connected-react-router";
 import HueReducer from "./hue/HueReducer";
 import DashboardReducer from "./dashboard/DashboardReducer";
 
-const reducerMap: ReducersMapObject = {
-  hueReducer: HueReducer.reducer,
-  dashboardReducer: DashboardReducer.reducer
-  //quoteReducer: QuoteReducer.reducer,
-};
-
-export default combineReducers(reducerMap) as Reducer<IStore>;
+export default (history: any) =>
+  combineReducers({
+    hueReducer: HueReducer.reducer,
+    dashboardReducer: DashboardReducer.reducer,
+    router: connectRouter(history)
+  }) as Reducer<IStore>;

@@ -4,6 +4,9 @@ import { Provider } from "react-redux";
 import { applyMiddleware, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
+import { createBrowserHistory } from "history";
+import { routerMiddleware } from "connected-react-router";
+import { ConnectedRouter } from "connected-react-router";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import blue from "@material-ui/core/colors/blue";
 import red from "@material-ui/core/colors/red";
@@ -17,11 +20,15 @@ import * as serviceWorker from "./serviceWorker";
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
 
+export const history = createBrowserHistory();
+
 // create a redux store with our reducer above and middleware
 const store = createStore(
-  Reducer,
+  Reducer(history),
   // applyMiddleware(sagaMiddleware)
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
+  composeWithDevTools(
+    applyMiddleware(routerMiddleware(history), sagaMiddleware)
+  )
 );
 
 // run the saga
@@ -40,7 +47,9 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <Provider store={store}>
     <MuiThemeProvider theme={theme}>
-      <App />
+      <ConnectedRouter history={history}>
+        <App />
+      </ConnectedRouter>
     </MuiThemeProvider>
   </Provider>,
   document.getElementById("root")
