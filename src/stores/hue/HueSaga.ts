@@ -31,7 +31,6 @@ export default class HueSaga {
   }
 
   public static *switchRoom(action: any) {
-    console.log(action.data);
     try {
       const response: any = yield call(
         HueService.switchRoom,
