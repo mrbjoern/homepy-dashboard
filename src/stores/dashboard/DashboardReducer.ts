@@ -1,18 +1,17 @@
-export default class DashboardReducer {
-  private static readonly _initialState: any = {
-    drawerOpen: false
-  };
+import { DashboardActionType, DashboardState, TOGGLE_DRAWER } from "./types";
 
-  public static reducer(
-    state: any = DashboardReducer._initialState,
-    action: any
-  ): any {
-    switch (action.type) {
-      case "TOGGLE_DRAWER":
-        return { ...state, drawerOpen: !state.drawerOpen };
+export const initialState: DashboardState = {
+  drawerOpen: false
+};
 
-      default:
-        return { ...state };
-    }
+export function dashboardReducer(
+  state = initialState,
+  action: DashboardActionType
+): DashboardState {
+  switch (action.type) {
+    case TOGGLE_DRAWER:
+      return { ...state, drawerOpen: !state.drawerOpen };
+    default:
+      return { ...state };
   }
 }

@@ -1,12 +1,15 @@
 import {
-  HueActionType,
   getRooms,
   getRoomsSuccess,
   getRoomsFailed,
   getLights,
   getLightsSuccess,
   getLightsFailed,
-  switchRoomSuccess,
+  switchRoomSuccess
+} from "./HueAction";
+
+import {
+  HueActionType,
   GET_ROOMS,
   GET_ROOMS_SUCCESS,
   GET_ROOMS_FAILED,
@@ -14,7 +17,7 @@ import {
   GET_LIGHTS_SUCCESS,
   GET_LIGHTS_FAILED,
   SWITCH_ROOM_SUCCESS
-} from "./HueAction";
+} from "./types";
 
 describe("HueActions", () => {
   it("should create GET_ROOMS action", () => {
