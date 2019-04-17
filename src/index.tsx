@@ -36,13 +36,21 @@ sagaMiddleware.run(rootSaga);
 
 const theme = createMuiTheme({
   palette: {
-    primary: blue,
+  //  primary: blue,
     secondary: red
   },
   typography: {
     useNextVariants: true
   }
 });
+
+function getLights() {
+  return {
+    type: "GET_ROOMS",
+  }
+}
+
+store.dispatch(getLights())
 
 ReactDOM.render(
   <Provider store={store}>

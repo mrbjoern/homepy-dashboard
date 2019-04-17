@@ -2,6 +2,7 @@ const API_URL: string = "http://127.0.0.1:5000/hue";
 
 function handleResponseErrors(response: Response) {
   if (!response.ok) {
+    console.log(response)
     throw Error(
       `${response.status} (${response.statusText}), request to ${response.url}`
     );

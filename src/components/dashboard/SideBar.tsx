@@ -46,12 +46,14 @@ const styles = (theme: any) => ({
 });
 
 const ListItemLink = (props: { to: string; text: string; icon: any }) => (
+<li>
   <Link to={props.to}>
     <ListItem button>
       <ListItemIcon>{props.icon}</ListItemIcon>
       <ListItemText primary={props.text} />
     </ListItem>
   </Link>
+  </li>
 );
 
 const SideBar = (props: {
@@ -69,6 +71,7 @@ const SideBar = (props: {
       )
     }}
   >
+  <nav>
     <div className={props.classes.toolbarIcon}>
       <IconButton onClick={props.toggleDrawer}>
         <ChevronLeftIcon />
@@ -79,7 +82,7 @@ const SideBar = (props: {
       <ListItemLink to="/" text="Dashboard" icon={<DashboardIcon />} />
       <ListItemLink to="/info" text="Info" icon={<InfoIcon />} />
     </List>
-    <Divider />
+    <Divider /></nav>
   </Drawer>
 );
 

@@ -5,6 +5,8 @@ export default class HueReducer {
       allIds: []
     },
     rooms: {
+      loading: false,
+      error: undefined,
       byId: {},
       allIds: []
     }
@@ -15,6 +17,7 @@ export default class HueReducer {
     action: any
   ): any {
     switch (action.type) {
+
       case "GET_LIGHTS_SUCCESS":
         return {
           ...state,
@@ -24,15 +27,33 @@ export default class HueReducer {
             allIds: Object.keys(action.data)
           }
         };
+      case "GET_ROOMS":
+        return {
+          ...state,
+          rooms: {
+            ...state.rooms,
+            loading: true }
+        }
       case "GET_ROOMS_SUCCESS":
         return {
           ...state,
           rooms: {
             ...state.rooms,
+            loading: false,
+            error: undefined,
             byId: action.data,
             allIds: Object.keys(action.data)
           }
         };
+      case "GET_ROOMS_FAILED":
+        return {
+          ...state,
+          rooms: {
+            ...state.rooms,
+            loading: false,
+            error: action.data,
+          }
+        }
       case "SWITCH_ROOM_SUCCESS":
         const actionState = state.rooms.byId[action.data].action;
         return {

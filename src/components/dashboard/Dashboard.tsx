@@ -5,7 +5,8 @@ import { Route, Switch } from "react-router"; // react-router v4
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
-import { RoomContainer } from "./hue";
+import { RoomContainer } from "../hue";
+import { InfoContainer } from "../info";
 import { default as TopBar } from "./TopBar";
 import { default as SideBar } from "./SideBar";
 
@@ -35,6 +36,7 @@ const Dashboard = (props: {
       <div className={props.classes.appBarSpacer} />
       <Switch>
         <Route exact path="/" render={() => <RoomContainer />} />
+        <Route exact path="/info" render={() => <InfoContainer />} />
         <Route render={() => <div>Miss</div>} />
       </Switch>
     </main>

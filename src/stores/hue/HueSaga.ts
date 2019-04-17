@@ -17,6 +17,7 @@ export default class HueSaga {
       const response: any = yield call(HueService.getRooms);
       yield put({ type: "GET_ROOMS_SUCCESS", data: response });
     } catch (error) {
+      console.log(error)
       yield put({ type: "GET_ROOMS_FAILED", data: error.message });
     }
   }

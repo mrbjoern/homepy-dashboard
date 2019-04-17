@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Dashboard } from "./components";
+import { Dashboard } from "./components/dashboard";
 
 // import "./App.css";
 
