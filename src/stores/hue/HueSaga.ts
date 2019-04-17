@@ -2,23 +2,31 @@
 import { call, put } from "redux-saga/effects";
 import HueService from "./HueService";
 
+import {
+  getRoomsSuccess,
+  getRoomsFailed,
+  getLightsSuccess,
+  getLightsFailed,
+  switchRoomSuccess
+} from "./HueAction";
+
 export default class HueSaga {
   public static *getLights() {
     try {
       const response: any = yield call(HueService.getLights);
-      yield put({ type: "GET_LIGHTS_SUCCESS", data: response });
+      yield put(getLightsSuccess(response));
     } catch (error) {
-      yield put({ type: "GET_LIGHTS_FAILED", data: error.message });
+      yield put(getLightsFailed(error.message));
     }
   }
 
   public static *getRooms() {
     try {
       const response: any = yield call(HueService.getRooms);
-      yield put({ type: "GET_ROOMS_SUCCESS", data: response });
+      yield put(getRoomsSuccess(response));
     } catch (error) {
-      console.log(error)
-      yield put({ type: "GET_ROOMS_FAILED", data: error.message });
+      console.log(error);
+      yield put(getRoomsFailed(error.message));
     }
   }
 
@@ -30,7 +38,7 @@ export default class HueSaga {
         action.data.roomId,
         action.data.action
       );
-      yield put({ type: "SWITCH_ROOM_SUCCESS", data: action.data.roomId });
+      yield put(switchRoomSuccess(action.data.roomId));
     } catch (error) {
       yield put({ type: "SWITCH_ROOM_FAILED", data: error.message });
     }

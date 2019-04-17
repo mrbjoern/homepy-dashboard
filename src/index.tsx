@@ -15,6 +15,8 @@ import App from "./App";
 import Reducer from "./stores/rootReducer";
 import rootSaga from "./stores/rootSaga";
 
+import { getRooms } from "./stores/hue/HueAction";
+
 import * as serviceWorker from "./serviceWorker";
 
 // create the saga middleware
@@ -36,7 +38,7 @@ sagaMiddleware.run(rootSaga);
 
 const theme = createMuiTheme({
   palette: {
-  //  primary: blue,
+    //  primary: blue,
     secondary: red
   },
   typography: {
@@ -44,13 +46,7 @@ const theme = createMuiTheme({
   }
 });
 
-function getLights() {
-  return {
-    type: "GET_ROOMS",
-  }
-}
-
-store.dispatch(getLights())
+store.dispatch(getRooms());
 
 ReactDOM.render(
   <Provider store={store}>

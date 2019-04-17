@@ -1,3 +1,12 @@
+import {
+  HueActionType,
+  GET_ROOMS,
+  GET_ROOMS_SUCCESS,
+  GET_ROOMS_FAILED,
+  GET_LIGHTS_SUCCESS,
+  SWITCH_ROOM_SUCCESS
+} from "./HueAction";
+
 export default class HueReducer {
   private static readonly _initialState: any = {
     lights: {
@@ -14,11 +23,10 @@ export default class HueReducer {
 
   public static reducer(
     state: any = HueReducer._initialState,
-    action: any
+    action: HueActionType
   ): any {
     switch (action.type) {
-
-      case "GET_LIGHTS_SUCCESS":
+      case GET_LIGHTS_SUCCESS:
         return {
           ...state,
           lights: {
@@ -27,14 +35,15 @@ export default class HueReducer {
             allIds: Object.keys(action.data)
           }
         };
-      case "GET_ROOMS":
+      case GET_ROOMS:
         return {
           ...state,
           rooms: {
             ...state.rooms,
-            loading: true }
-        }
-      case "GET_ROOMS_SUCCESS":
+            loading: true
+          }
+        };
+      case GET_ROOMS_SUCCESS:
         return {
           ...state,
           rooms: {
@@ -45,16 +54,16 @@ export default class HueReducer {
             allIds: Object.keys(action.data)
           }
         };
-      case "GET_ROOMS_FAILED":
+      case GET_ROOMS_FAILED:
         return {
           ...state,
           rooms: {
             ...state.rooms,
             loading: false,
-            error: action.data,
+            error: action.data
           }
-        }
-      case "SWITCH_ROOM_SUCCESS":
+        };
+      case SWITCH_ROOM_SUCCESS:
         const actionState = state.rooms.byId[action.data].action;
         return {
           ...state,
